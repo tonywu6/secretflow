@@ -278,6 +278,8 @@ jobs:
       - persist_to_workspace:
           name: Persist venv
           root: /venv
+          paths:
+            - "*"
       - save_cache:
           name: Save pip cache
           key: *pip-cache
@@ -329,6 +331,8 @@ jobs:
       - persist_to_workspace:
           name: Persist venv
           root: /venv
+          paths:
+            - "*"
       - save_cache:
           key: *pip-cache
           paths:
