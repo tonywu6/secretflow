@@ -104,6 +104,9 @@ commands:
           command: |
             rm -rf secretflow
 
+            conda run -p /tmp/venv python3 -c "import sys; print(sys.path)"
+            find /tmp/venv/lib/python3.10/site-packages/ -type d -depth 1
+
             conda run -p /tmp/venv python3 -m pytest --suppress-no-test-exit-code \
               --testmon \
               --env <<parameters.mode>> \
@@ -260,14 +263,6 @@ jobs:
               --cache-dir /tmp/.cache/pip \
               --upgrade \
               pip build
-
-            set -eux
-
-            git diff-files | cat
-            git describe --all --long --tags | cat
-            git status | cat
-            git tag | cat
-            git log --oneline --decorate -n 20 | cat
 
             conda run -p /tmp/venv python3 -m build --sdist --wheel --outdir dist
       - run:
