@@ -261,6 +261,9 @@ jobs:
               --upgrade \
               pip build
 
+            git diff-files
+            git describe --all --long
+
             conda run -p /tmp/venv python3 -m build --sdist --wheel --outdir dist
       - run:
           name: Install deps
