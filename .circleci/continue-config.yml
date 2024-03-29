@@ -261,8 +261,13 @@ jobs:
               --upgrade \
               pip build
 
-            git diff-files
-            git describe --all --long
+            set -eux
+
+            git diff-files | cat
+            git describe --all --long --tags | cat
+            git status | cat
+            git tag | cat
+            git log --oneline --decorate -n 20 | cat
 
             conda run -p /tmp/venv python3 -m build --sdist --wheel --outdir dist
       - run:
