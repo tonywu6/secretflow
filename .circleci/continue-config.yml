@@ -105,7 +105,7 @@ commands:
             rm -rf secretflow
 
             conda run -p /tmp/venv python3 -c "import sys; print(sys.path)"
-            find /tmp/venv/lib/python3.10/site-packages/ -type d -depth 1
+            find /tmp/venv/lib/python3.10/site-packages/ -maxdepth 1 -type d
 
             conda run -p /tmp/venv python3 -m pytest --suppress-no-test-exit-code \
               --testmon \
