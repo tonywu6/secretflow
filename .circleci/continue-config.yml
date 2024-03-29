@@ -104,6 +104,7 @@ commands:
           command: |
             rm -rf secretflow
 
+            conda init
             conda activate /venv
 
             python3 -m pytest --suppress-no-test-exit-code \
@@ -251,6 +252,7 @@ jobs:
       - run:
           name: Create venv
           command: |
+            conda init
             conda create -y -p /venv -c conda-forge python=3.10
       - restore_cache:
           name: Restore pip cache
@@ -258,6 +260,7 @@ jobs:
       - run:
           name: Build wheel
           command: |
+            conda init
             conda activate /venv
 
             python3 -m pip install \
@@ -269,6 +272,7 @@ jobs:
       - run:
           name: Install deps
           command: |
+            conda init
             conda activate /venv
 
             python3 -m pip install \
@@ -304,6 +308,7 @@ jobs:
       - run:
           name: Create venv
           command: |
+            conda init
             conda create -y -p /venv -c conda-forge python=3.10
       - restore_cache:
           name: Restore pip cache
@@ -311,6 +316,7 @@ jobs:
       - run:
           name: Build wheel
           command: |
+            conda init
             conda activate /venv
 
             python3 -m pip install \
@@ -322,6 +328,7 @@ jobs:
       - run:
           name: Install deps
           command: |
+            conda init
             conda activate /venv
 
             python3 -m pip install \
