@@ -104,9 +104,7 @@ commands:
           command: |
             rm -rf secretflow
 
-            conda env activate /tmp/venv
-
-            python3 -m pytest --suppress-no-test-exit-code \
+            conda run -p /tmp/venv python3 -m pytest --suppress-no-test-exit-code \
               --testmon \
               --env <<parameters.mode>> \
               -n auto \
@@ -258,20 +256,16 @@ jobs:
       - run:
           name: Build wheel
           command: |
-            conda env activate /tmp/venv
-
-            python3 -m pip install \
+            conda run -p /tmp/venv python3 -m pip install \
               --cache-dir /tmp/.cache/pip \
               --upgrade \
               pip build
 
-            python3 -m build --sdist --wheel --outdir dist
+            conda run -p /tmp/venv python3 -m build --sdist --wheel --outdir dist
       - run:
           name: Install deps
           command: |
-            conda env activate /tmp/venv
-
-            python3 -m pip install \
+            conda run -p /tmp/venv python3 -m pip install \
               --cache-dir /tmp/.cache/pip \
               --find-links dist \
               "secretflow[dev,full]>=1.0.0.dev0"
@@ -311,20 +305,16 @@ jobs:
       - run:
           name: Build wheel
           command: |
-            conda env activate /tmp/venv
-
-            python3 -m pip install \
+            conda run -p /tmp/venv python3 -m pip install \
               --cache-dir /tmp/.cache/pip \
               --upgrade \
               pip build
 
-            python3 -m build --sdist --wheel --outdir dist
+            conda run -p /tmp/venv python3 -m build --sdist --wheel --outdir dist
       - run:
           name: Install deps
           command: |
-            conda env activate /tmp/venv
-
-            python3 -m pip install \
+            conda run -p /tmp/venv python3 -m pip install \
               --cache-dir /tmp/.cache/pip \
               --find-links dist \
               "secretflow[dev,full]>=1.0.0.dev0"
