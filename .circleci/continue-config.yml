@@ -95,7 +95,7 @@ commands:
         default: "sim"
     steps:
       - attach_workspace:
-          at: /venv
+          at: /tmp/venv
       - restore_cache:
           name: Restore pytest testmondata
           key: testmondata_<<parameters.testmon_prefix>>_{{ arch }}_{{ .Branch }}_
@@ -104,8 +104,7 @@ commands:
           command: |
             rm -rf secretflow
 
-            conda init
-            conda activate /venv
+            conda env activate /tmp/venv
 
             python3 -m pytest --suppress-no-test-exit-code \
               --testmon \
@@ -252,16 +251,14 @@ jobs:
       - run:
           name: Create venv
           command: |
-            conda init
-            conda create -y -p /venv -c conda-forge python=3.10
+            conda create -y -p /tmp/venv -c conda-forge python=3.10
       - restore_cache:
           name: Restore pip cache
           key: &pip-cache pip-{{ arch }}-{{ .Branch }}
       - run:
           name: Build wheel
           command: |
-            conda init
-            conda activate /venv
+            conda env activate /tmp/venv
 
             python3 -m pip install \
               --cache-dir /tmp/.cache/pip \
@@ -272,8 +269,7 @@ jobs:
       - run:
           name: Install deps
           command: |
-            conda init
-            conda activate /venv
+            conda env activate /tmp/venv
 
             python3 -m pip install \
               --cache-dir /tmp/.cache/pip \
@@ -281,7 +277,7 @@ jobs:
               "secretflow[dev,full]>=1.0.0.dev0"
       - persist_to_workspace:
           name: Persist venv
-          root: /venv
+          root: /tmp/venv
           paths:
             - "*"
       - save_cache:
@@ -308,16 +304,14 @@ jobs:
       - run:
           name: Create venv
           command: |
-            conda init
-            conda create -y -p /venv -c conda-forge python=3.10
+            conda create -y -p /tmp/venv -c conda-forge python=3.10
       - restore_cache:
           name: Restore pip cache
           key: &pip-cache pip-{{ arch }}-{{ .Branch }}
       - run:
           name: Build wheel
           command: |
-            conda init
-            conda activate /venv
+            conda env activate /tmp/venv
 
             python3 -m pip install \
               --cache-dir /tmp/.cache/pip \
@@ -328,8 +322,7 @@ jobs:
       - run:
           name: Install deps
           command: |
-            conda init
-            conda activate /venv
+            conda env activate /tmp/venv
 
             python3 -m pip install \
               --cache-dir /tmp/.cache/pip \
@@ -337,7 +330,7 @@ jobs:
               "secretflow[dev,full]>=1.0.0.dev0"
       - persist_to_workspace:
           name: Persist venv
-          root: /venv
+          root: /tmp/venv
           paths:
             - "*"
       - save_cache:
